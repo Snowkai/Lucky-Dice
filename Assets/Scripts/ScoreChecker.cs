@@ -54,7 +54,7 @@ public class ScoreChecker : MonoBehaviour
         bool check = false;
         foreach (GameObject dice in dices)
         {
-            if (dice.GetComponent<Rigidbody>().velocity.magnitude == 0)
+            if (dice.GetComponent<Rigidbody>().linearVelocity.magnitude == 0)
             {
                 check = true;
             }
