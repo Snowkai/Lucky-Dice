@@ -1,0 +1,5 @@
+E:/Unity Projects/Lucky-Dice/.utmp/RelWithDebInfo/2q6l1w3k/arm64-v8a/CMakeFiles/edit_cache.dir
+E:/Unity Projects/Lucky-Dice/.utmp/RelWithDebInfo/2q6l1w3k/arm64-v8a/CMakeFiles/rebuild_cache.dir
+E:/Unity Projects/Lucky-Dice/.utmp/RelWithDebInfo/2q6l1w3k/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+E:/Unity Projects/Lucky-Dice/.utmp/RelWithDebInfo/2q6l1w3k/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+E:/Unity Projects/Lucky-Dice/.utmp/RelWithDebInfo/2q6l1w3k/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir
