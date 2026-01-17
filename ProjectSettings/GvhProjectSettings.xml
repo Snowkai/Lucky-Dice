@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <projectSettings>
   <projectSetting name="com.google.external-dependency-managerAnalyticsCookie" value="7f0342dd5fe941eb987a2399cec1618f" />
   <projectSetting name="com.google.external-dependency-managerAnalyticsEnabled" value="True" />
@@ -17,8 +17,12 @@
   <projectSetting name="GooglePlayServices.PatchAndroidManifest" value="True" />
   <projectSetting name="GooglePlayServices.PatchMainTemplateGradle" value="True" />
   <projectSetting name="GooglePlayServices.PatchPropertiesTemplateGradle" value="True" />
+  <projectSetting name="GooglePlayServices.PatchSettingsTemplateGradle" value="True" />
   <projectSetting name="GooglePlayServices.PromptBeforeAutoResolution" value="False" />
+  <projectSetting name="GooglePlayServices.UseFullCustomMavenRepoPathWhenExport" value="True" />
+  <projectSetting name="GooglePlayServices.UseFullCustomMavenRepoPathWhenNotExport" value="False" />
   <projectSetting name="GooglePlayServices.UseGradleDaemon" value="False" />
   <projectSetting name="GooglePlayServices.UseJetifier" value="True" />
+  <projectSetting name="GooglePlayServices.UserRejectedGradleUpgrade" value="False" />
   <projectSetting name="GooglePlayServices.VerboseLogging" value="False" />
 </projectSettings>
