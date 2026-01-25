@@ -2,67 +2,87 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
-using System;
 
 public class ScoreChecker : MonoBehaviour
 {
+    public AppodealADSScript ads;
     public Text textScore;
     private List<GameObject> dices = new List<GameObject>();
     private string[] tags = new string[] { "D4", "D6", "D8", "D10", "D12", "D20" };
     private int totalScore = 0;
+
+    // НОВАЯ ПЕРЕМЕННАЯ: Флаг, отслеживающий, ждем ли мы остановки
+    private bool isRolling = false;
+    private float stopTimer = 0f; // Таймер покоя
+    private const float timeToWait = 0.8f; // Сколько секунд кубики должны лежать неподвижно
+
     void Update()
     {
-        CreateListOfDices();
-        
-        if (cheker(dices))
+        UpdateDiceList();
+        bool allStopped = IsAllStopped();
+
+        if (!allStopped)
         {
-            scoreWrite();
-            dices.Clear();
-            
+            // Если хоть один кубик движется — сбрасываем всё
+            isRolling = true;
+            stopTimer = 0f;
         }
-        else
+        else if (isRolling && allStopped)
         {
-            dices.Clear();     
-        }  
+            // Если кубики замерли, начинаем отсчет таймера
+            stopTimer += Time.deltaTime;
+
+            if (stopTimer >= timeToWait)
+            {
+                // Только по истечении времени засчитываем бросок
+                scoreWrite();
+                isRolling = false;
+                stopTimer = 0f;
+            }
+        }
     }
+
 
     private void scoreWrite()
     {
+        totalScore = 0;
         foreach (GameObject dice in dices)
         {
             totalScore += dice.GetComponent<SideChecker>().score;
         }
 
         textScore.text = totalScore.ToString();
-        totalScore = 0;       
+
+        if (ads != null)
+        {
+            ads.OnDiceThrown(); // Теперь вызовется строго 1 раз после остановки
+        }
     }
 
-    private void CreateListOfDices()
+    // Оптимизация: ищем объекты реже или только когда нужно
+    private void UpdateDiceList()
     {
+        dices.Clear();
         foreach (string tag in tags)
         {
-            foreach (GameObject obj in GameObject.FindGameObjectsWithTag(tag))
-            {
-                dices.Add(obj);
-            }
+            GameObject[] found = GameObject.FindGameObjectsWithTag(tag);
+            dices.AddRange(found);
         }
     }
 
-    bool cheker(List<GameObject> dices)
+    bool IsAllStopped()
     {
-        bool check = false;
+        if (dices.Count == 0) return true;
+
         foreach (GameObject dice in dices)
         {
-            if (dice.GetComponent<Rigidbody>().linearVelocity.magnitude == 0)
+            // Проверка на 0 скорости. 
+            // linearVelocity.magnitude < 0.05f лучше, так как физика может "дрожать"
+            if (dice.GetComponent<Rigidbody>().linearVelocity.magnitude > 0.05f)
             {
-                check = true;
-            }
-            else
-            {
-                check = false;
+                return false; // Хотя бы один еще катится
             }
         }
-        return check;
+        return true; // Все лежат
     }
 }

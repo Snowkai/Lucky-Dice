@@ -30,9 +30,6 @@ dependencyResolutionManagement {
         maven {
             url "https://repo1.maven.org/maven2" // Assets/Appodeal/Editor/Dependencies/AppodealDependencies.xml:175
         }
-        maven {
-            url "https://maven.google.com/" // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
-        }
         mavenLocal()
 // Android Resolver Repos End
         flatDir {

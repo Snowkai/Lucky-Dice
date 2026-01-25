@@ -47,7 +47,6 @@
     <package>com.appodeal.ads.sdk.networks:yandex:3.12.0.0</package>
     <package>com.appodeal.ads.sdk.services:sentry_analytics:3.12.0.0</package>
     <package>com.appodeal.ads.sdk:core:3.12.0</package>
-    <package>com.google.android.gms:play-services-ads:20.0.0</package>
     <package>com.unity3d.ads-mediation:admob-adapter:5.2.0</package>
     <package>com.unity3d.ads-mediation:applovin-adapter:5.2.0</package>
     <package>com.unity3d.ads-mediation:bidmachine-adapter:5.1.0</package>

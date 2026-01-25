@@ -15,8 +15,8 @@ MonoBehaviour:
   analyticsEnabled: 1
   analyticsLoggingEnabled: 0
   analyticsConfigFileTransmissionEnabled: 1
-  adMobAndroidAppId: ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy
-  adMobIosAppId: ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy
+  adMobAndroidAppId: ca-app-pub-7811966426368723~5153071716
+  adMobIosAppId: ca-app-pub-3940256099942544~1458002511
   accessCoarseLocationPermission: 0
   writeExternalStoragePermission: 1
   accessWifiStatePermission: 1
