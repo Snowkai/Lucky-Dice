@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "ai-game-developer": {
+      "enabled": true,
+      "type": "remote",
+      "url": "http://localhost:21692/p/6c50d52e"
+    }
+  }
+}

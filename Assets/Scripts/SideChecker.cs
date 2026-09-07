@@ -1,44 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System;
+﻿using UnityEngine;
 
-public class SideChecker : MonoBehaviour
+namespace LuckyDice
 {
-    public Transform[] faces;
-    public int score=0;
-    public GameObject dice;
-
-    // проверка верхней крани кости.
-    private int checkFace()
+    public class SideChecker : MonoBehaviour
     {
-        float maxY = 0f;
-        Transform upFace = null;
+        [SerializeField] private Transform[] faces;
+        [SerializeField] private GameObject dice;
+        [SerializeField] private float velocityThreshold = 0.05f;
 
-        foreach (Transform face in faces)
+        public int Score { get; private set; }
+
+        private Rigidbody rb;
+        private bool isMoving;
+
+        private void Start()
         {
-            if (face.position.y > maxY)
+            rb = GetComponent<Rigidbody>();
+        }
+
+        private void Update()
+        {
+            isMoving = rb.linearVelocity.magnitude > velocityThreshold;
+
+            if (isMoving)
             {
-                maxY = face.position.y;
-                upFace = face;
+                Score = CheckFace();
             }
         }
 
-        int total = Array.IndexOf(faces, upFace) + 1;
-
-        if (dice.tag == "D10")
+        private int CheckFace()
         {
-            if(total == 10)
+            float maxY = 0f;
+            Transform upFace = null;
+
+            foreach (Transform face in faces)
+            {
+                if (face.position.y > maxY)
+                {
+                    maxY = face.position.y;
+                    upFace = face;
+                }
+            }
+
+            int total = System.Array.IndexOf(faces, upFace) + 1;
+
+            if (dice.CompareTag("D10") && total == 10)
             {
                 total = 0;
             }
-        }
-        
-        return total;
-    }
 
-    private void Update()
-    {
-        score = checkFace();
+            return total;
+        }
     }
 }

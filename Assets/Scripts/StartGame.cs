@@ -1,17 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class StartGame : MonoBehaviour
+namespace LuckyDice
 {
-    public GameObject button;
-    // Start is called before the first frame update
-    void Start()
+    public class StartGame : MonoBehaviour
     {
-        button.GetComponent<Button>().onClick.Invoke();
-        button.GetComponent<Button>().onClick.Invoke();
-    }
+        public GameObject button;
+        public GameObject Setting_bg;
 
- 
+        private void Start()
+        {
+            if (button != null)
+            {
+                Button btn = button.GetComponent<Button>();
+                if (btn != null)
+                {
+                    btn.onClick.Invoke();
+                }
+            }
+
+            if (Setting_bg != null)
+            {
+                Setting_bg.SetActive(false);
+            }
+        }
+    }
 }

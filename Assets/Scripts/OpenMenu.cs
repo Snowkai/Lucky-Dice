@@ -1,19 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class OpenMenu : MonoBehaviour
+namespace LuckyDice
 {
-    public GameObject Setting_bg;
-
-    public void OpenM()
+    public class OpenMenu : MonoBehaviour
     {
-        if(Setting_bg != null)
+        public GameObject Setting_bg;
+
+        public void OpenM()
         {
-            bool isActive = Setting_bg.activeSelf;
-
-            Setting_bg.SetActive(!isActive);
+            if (Setting_bg != null)
+            {
+                Setting_bg.SetActive(!Setting_bg.activeSelf);
+            }
         }
-
     }
 }

@@ -2,52 +2,44 @@ using AppodealStack.Monetization.Api;
 using AppodealStack.Monetization.Common;
 using UnityEngine;
 
-public class AppodealADSScript : MonoBehaviour
+namespace LuckyDice
 {
-    private int throwCounter = 0; // Счетчик бросков
-    private const int ThrowsBeforeAd = 7; // Через сколько бросков показывать
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class AppodealADSScript : MonoBehaviour
     {
-        //Тестовый ркжим
-        //Appodeal.SetTesting(true);
-        
-        int adTypes = AppodealAdType.Interstitial;
-        string appKey = "da749c03d21bba586171f1273db7e71922ab176c67c7710a";
-        AppodealCallbacks.Sdk.OnInitialized += OnInitializationFinished;
-        Appodeal.Initialize(appKey, adTypes);
-    }
+        [SerializeField] private int throwsBeforeAd = 7;
 
-    public void OnInitializationFinished(object sender, SdkInitializedEventArgs e) { }
+        private int throwCounter;
 
-    // Этот метод вызывай каждый раз, когда игрок бросает кубик
-    public void OnDiceThrown()
-    {
-        throwCounter++;
-        Debug.Log($"Бросок №{throwCounter}"); // Для отладки в консоли
-
-        if (throwCounter >= ThrowsBeforeAd)
+        private void Start()
         {
-            ShowInterstitial();
+            int adTypes = AppodealAdType.Interstitial;
+            string appKey = "da749c03d21bba586171f1273db7e71922ab176c67c7710a";
+
+            AppodealCallbacks.Sdk.OnInitialized += OnInitializationFinished;
+            Appodeal.Initialize(appKey, adTypes);
         }
-    }
 
-    private void ShowInterstitial()
-    {
-        if (Appodeal.IsLoaded(AppodealAdType.Interstitial))
+        private void OnInitializationFinished(object sender, SdkInitializedEventArgs e) { }
+
+        public void OnDiceThrown()
         {
-            Appodeal.Show(AppodealShowStyle.Interstitial);
-            //Debug.Log("ADS SHOW");
-            throwCounter = 0; // Сброс, так как реклама показана
+            throwCounter++;
+            Debug.Log($"Бросок №{throwCounter}");
+
+            if (throwCounter >= throwsBeforeAd)
+            {
+                ShowInterstitial();
+            }
         }
-        else
+
+        private void ShowInterstitial()
         {
-            //Debug.Log("Реклама еще не прогрузилась. Попробуем на следующем броске.");
-            // Если хотите сбросить и ждать еще 3 броска, 
-            // добавьте throwCounter = 0; и здесь тоже.
+            if (Appodeal.IsLoaded(AppodealAdType.Interstitial))
+            {
+                Appodeal.Show(AppodealShowStyle.Interstitial);
+            }
+
             throwCounter = 0;
         }
     }
-
 }
