@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace LuckyDice
@@ -7,7 +7,7 @@ namespace LuckyDice
     {
         public Button plus;
         public Button minus;
-        public InputField display;
+        public Text countText;
         public GameObject dice;
         public int initialDiceCount = 0;
 
@@ -31,7 +31,8 @@ namespace LuckyDice
             if (number_dices < 6)
             {
                 ++number_dices;
-                display.text = number_dices.ToString();
+                if (countText != null)
+                    countText.text = number_dices.ToString();
                 Instantiate(dice);
             }
         }
@@ -41,7 +42,8 @@ namespace LuckyDice
             if (number_dices > 0)
             {
                 --number_dices;
-                display.text = number_dices.ToString();
+                if (countText != null)
+                    countText.text = number_dices.ToString();
                 destrobj = GameObject.FindGameObjectsWithTag(dice.tag);
                 Destroy(destrobj[destrobj.Length - 1]);
             }

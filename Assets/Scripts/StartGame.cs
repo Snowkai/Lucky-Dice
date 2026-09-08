@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace LuckyDice
@@ -10,18 +10,23 @@ namespace LuckyDice
 
         private void Start()
         {
+            if (Setting_bg != null)
+            {
+                Setting_bg.SetActive(true);
+            }
+
             if (button != null)
             {
                 Button btn = button.GetComponent<Button>();
                 if (btn != null)
                 {
-                    btn.onClick.Invoke();
+                    btn.onClick.RemoveAllListeners();
+                    var openMenu = button.GetComponent<OpenMenu>();
+                    if (openMenu != null)
+                    {
+                        btn.onClick.AddListener(() => openMenu.OpenM());
+                    }
                 }
-            }
-
-            if (Setting_bg != null)
-            {
-                Setting_bg.SetActive(false);
             }
         }
     }
