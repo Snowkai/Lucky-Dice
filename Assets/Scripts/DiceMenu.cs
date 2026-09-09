@@ -14,6 +14,9 @@ namespace LuckyDice
 
         public DiceRow[] diceRows;
         public Button checkButton;
+        public Image checkButtonImage;
+        public Sprite toggleOnSprite;
+        public Sprite toggleOffSprite;
         public GameObject scoreField;
 
         private bool scoreVisible = false;
@@ -22,6 +25,9 @@ namespace LuckyDice
         {
             if (checkButton != null)
                 checkButton.onClick.AddListener(ToggleScore);
+
+            scoreVisible = scoreField != null && scoreField.activeSelf;
+            UpdateToggleSprite();
         }
 
         public void ToggleScore()
@@ -29,6 +35,15 @@ namespace LuckyDice
             scoreVisible = !scoreVisible;
             if (scoreField != null)
                 scoreField.SetActive(scoreVisible);
+            UpdateToggleSprite();
+        }
+
+        private void UpdateToggleSprite()
+        {
+            if (checkButtonImage != null)
+            {
+                checkButtonImage.sprite = scoreVisible ? toggleOnSprite : toggleOffSprite;
+            }
         }
     }
 }
