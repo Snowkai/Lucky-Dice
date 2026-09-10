@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;  // ✅ Добавлено: требуется для List<T>
 
 namespace LuckyDice
 {
@@ -8,11 +9,11 @@ namespace LuckyDice
         public Button plus;
         public Button minus;
         public Text countText;
-        public GameObject dice;
+        public GameObject dicePrefab;  // ✅ Исправлено: теперь используем Prefab
         public int initialDiceCount = 0;
 
         private int number_dices = 0;
-        private GameObject[] destrobj;
+        private List<GameObject> activeDices = new List<GameObject>();  // ✅ Исправлено: храним все активные кости
         private bool hasSpawned = false;
 
         private void OnEnable()
@@ -28,12 +29,14 @@ namespace LuckyDice
 
         public void btn_plus()
         {
-            if (number_dices < 6)
+            if (number_dices < 6 && dicePrefab != null)
             {
                 ++number_dices;
                 if (countText != null)
                     countText.text = number_dices.ToString();
-                Instantiate(dice);
+                
+                GameObject newDice = Instantiate(dicePrefab);
+                activeDices.Add(newDice);  // ✅ Исправлено: добавляем в список активных костей
             }
         }
 
@@ -44,9 +47,24 @@ namespace LuckyDice
                 --number_dices;
                 if (countText != null)
                     countText.text = number_dices.ToString();
-                destrobj = GameObject.FindGameObjectsWithTag(dice.tag);
-                Destroy(destrobj[destrobj.Length - 1]);
+                
+                if (activeDices.Count > 0)
+                {
+                    GameObject diceToRemove = activeDices[activeDices.Count - 1];  // ✅ Исправлено: берём последний из списка
+                    Destroy(diceToRemove);
+                    activeDices.RemoveAt(activeDices.Count - 1);  // ✅ Исправлено: удаляем из списка
+                }
             }
+        }
+
+        private void OnDestroy()
+        {
+            // Очистка всех активных костей при уничтожении скрипта
+            foreach (GameObject dice in activeDices)
+            {
+                Destroy(dice);
+            }
+            activeDices.Clear();
         }
     }
 }

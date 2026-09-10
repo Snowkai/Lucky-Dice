@@ -35,17 +35,16 @@ namespace LuckyDice
 
         private void OnInitializationFinished(object sender, SdkInitializedEventArgs e) 
         {
-            // ✅ Исправлено: обработка событий инициализации без доступа к несуществующему свойству error
-            if (e != null)
+            // ✅ Исправлено: обработка ошибок инициализации
+            if (e.error != null)
             {
-                Debug.Log("Appodeal SDK initialized successfully!");
-                isInitialized = true;
-            }
-            else
-            {
-                Debug.LogWarning("Appodeal initialization completed without data");
+                Debug.LogError($"Appodeal initialization failed: {e.error}");
                 isInitialized = false;
+                return;
             }
+
+            isInitialized = true;
+            Debug.Log("Appodeal SDK initialized successfully!");
         }
 
         public void OnDiceThrown()

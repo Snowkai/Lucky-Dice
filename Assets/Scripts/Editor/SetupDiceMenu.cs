@@ -38,15 +38,15 @@ public class SetupDiceMenu : EditorWindow
         Color iconColor = HexColor("#FAEFD5");
 
         SetImage(canvas.transform.Find("Setting_bg"), woodBg, Image.Type.Simple, Color.white);
-        SetImage(canvas.transform.Find("Setting_bg/menu"), parchment, Image.Type.Sliced, Color.white);
+        SetImage(canvas.transform.Find("Setting_bg/Menu"), parchment, Image.Type.Sliced, Color.white);
 
-        Transform titleT = canvas.transform.Find("Setting_bg/menu/Title_DICE");
+        Transform titleT = canvas.transform.Find("Setting_bg/Menu/Title_DICE");
         if (titleT != null) SetText(titleT, "DICE", cinzelBold, 64, textColor, TextAnchor.MiddleCenter);
 
         string[] tags = { "D4", "D6", "D8", "D10", "D12", "D20" };
         foreach (string tag in tags)
         {
-            Transform row = canvas.transform.Find("Setting_bg/menu/Row_" + tag);
+            Transform row = canvas.transform.Find("Setting_bg/Menu/Row_" + tag);
             if (row == null) { Debug.LogWarning("Row not found: " + tag); continue; }
 
             Transform labelT = row.Find("Label");
@@ -59,13 +59,14 @@ public class SetupDiceMenu : EditorWindow
             if (countT != null)
             {
                 SetImage(countT, numberField, Image.Type.Sliced, Color.white);
-                SetText(countT, "0", cinzelRegular, 24, textColor, TextAnchor.MiddleCenter);
+                Transform countText = countT.Find("Text");
+                if (countText != null) SetText(countText, "0", cinzelRegular, 24, textColor, TextAnchor.MiddleCenter);
             }
         }
 
         for (int i = 0; i < tags.Length - 1; i++)
         {
-            Transform divT = canvas.transform.Find("Setting_bg/menu/Divider_" + tags[i]);
+            Transform divT = canvas.transform.Find("Setting_bg/Menu/Divider_" + tags[i]);
             if (divT != null)
             {
                 var divImg = divT.GetComponent<Image>();
@@ -78,7 +79,7 @@ public class SetupDiceMenu : EditorWindow
             }
         }
 
-        Transform scoreRow = canvas.transform.Find("Setting_bg/menu/ScoreRow");
+        Transform scoreRow = canvas.transform.Find("Setting_bg/Menu/ScoreRow");
         if (scoreRow != null)
         {
             Transform slT = scoreRow.Find("ScoreLabel");

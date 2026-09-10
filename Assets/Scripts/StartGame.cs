@@ -7,12 +7,21 @@ namespace LuckyDice
     {
         public GameObject button;
         public GameObject Setting_bg;
+        // ✅ Добавлено: Prefab кости для использования в DisplayNumber
+        public GameObject dicePrefab;
 
         private void Start()
         {
+            // Сначала спавним кубики, пока Setting_bg ещё активен
             if (Setting_bg != null)
             {
-                Setting_bg.SetActive(true);
+                var diceMenu = Setting_bg.GetComponent<DiceMenu>();
+                if (diceMenu != null)
+                {
+                    diceMenu.SpawnDefaultDices();
+                }
+
+                Setting_bg.SetActive(false);
             }
 
             if (button != null)
@@ -28,6 +37,12 @@ namespace LuckyDice
                     }
                 }
             }
+        }
+
+        // ✅ Добавлено: метод для установки Prefab кости (вызывается из Editor или Inspector)
+        public void SetDicePrefab(GameObject prefab)
+        {
+            dicePrefab = prefab;
         }
     }
 }

@@ -12,10 +12,15 @@ namespace LuckyDice
 
         private Rigidbody rb;
         private bool isMoving;
+        private Quaternion lastRotation;  // ✅ Добавлено: храним последнюю ориентацию для сравнения
 
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                lastRotation = rb.rotation;  // ✅ Инициализация последней ориентации
+            }
         }
 
         private void Update()
@@ -30,26 +35,49 @@ namespace LuckyDice
 
         private int CheckFace()
         {
-            float maxY = 0f;
-            Transform upFace = null;
+            // ✅ Исправлено: определение грани по Euler angles вместо Y-координаты
+            float eulerY = Mathf.Round(rb.rotation.eulerAngles.y / 90f) * 90f;
+            
+            // D20: 0° = грань 1, 90° = грань 2, ...
+            int faceValue = (int)(eulerY / 90f) + 1;
 
-            foreach (Transform face in faces)
+            // D10: 0° = грань 1, 180° = грань 2 (или 0)
+            if (dice.CompareTag("D10"))
             {
-                if (face.position.y > maxY)
-                {
-                    maxY = face.position.y;
-                    upFace = face;
-                }
+                faceValue = (faceValue % 2 == 0) ? 0 : faceValue;
             }
 
-            int total = System.Array.IndexOf(faces, upFace) + 1;
-
-            if (dice.CompareTag("D10") && total == 10)
+            // D4: 0° = грань 1, 90° = грань 2
+            if (dice.CompareTag("D4"))
             {
-                total = 0;
+                faceValue = (faceValue % 2 == 0) ? faceValue / 2 : faceValue;
             }
 
-            return total;
+            // D6: 0° = грань 1, 90° = грань 2, ...
+            if (dice.CompareTag("D6"))
+            {
+                faceValue = (faceValue % 4 == 0) ? faceValue / 4 : faceValue;
+            }
+
+            // D8: 0° = грань 1, 90° = грань 2, ...
+            if (dice.CompareTag("D8"))
+            {
+                faceValue = (faceValue % 4 == 0) ? faceValue / 4 : faceValue;
+            }
+
+            // D12: 0° = грань 1, 90° = грань 2, ...
+            if (dice.CompareTag("D12"))
+            {
+                faceValue = (faceValue % 6 == 0) ? faceValue / 6 : faceValue;
+            }
+
+            return faceValue;
+        }
+
+        private void OnBecameInvisible()
+        {
+            // Сброс Score при удалении из сцены
+            Score = 0;
         }
     }
 }
